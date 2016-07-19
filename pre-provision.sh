@@ -1,3 +1,4 @@
+#!/bin/bash
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
 
