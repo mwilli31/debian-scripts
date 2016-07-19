@@ -91,8 +91,7 @@ cd setupScripts
 cd ..
 cd ..
 
-echo "Downloading and updating flowthings"
-curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
+
 
 chmod -R 777 *
 if [ "$KIT" == "intel.edison.grove.flower" ]; then
@@ -125,6 +124,10 @@ if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
 	echo "Installing Room Monitor Kit"
 	sudo systemctl enable roommon-sensor-pub
 fi
+
+echo "Downloading and updating flowthings"
+curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
+
 sudo systemctl enable predix-machine
 sudo systemctl enable mongoServer
 sudo systemctl enable mongoStart
