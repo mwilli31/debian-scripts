@@ -33,7 +33,9 @@ do
                 -k)
                         shift
                         KIT="$1"
-			KITARG="true"
+			if [ "$KIT" == "intel.edison.grove.flower" ] || [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
+				KITARG="true"
+			fi
 			shift
                         ;;
 		*)
@@ -57,8 +59,8 @@ if [ "$IDARG" == "false" ] || [ "$ID" == "" ]; then
         echo "ID argument -i required"
 	exit 1
 fi
-if [ "$KITARG" == "false" ] || [ "$KIT" == "" ]; then
-        echo "Kit argument -k required"
+if [ "$KITARG" == "false" ]; then
+        echo "Kit argument -k required, must be intel.edison.grove.flower, intel.edison.grove.roommonitor"
 	exit 1
 fi
 
@@ -85,19 +87,40 @@ echo "Downloading and updating flowthings"
 curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
 
 chmod -R 777 *
-echo "Installing Starter Kit"
-cd predix-machine-drivers-edison/Install
-./StarterKitDriverInstall.sh
+if [ "$KIT" == "intel.edison.grove.flower" ]; then
+	echo "Installing Flower Pot Kit"
+	cd predix-machine-drivers-edison/Install
+	./FlowerPotKitDriverInstall.sh
+fi
+if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
+	echo "Installing Room Monitor Kit"
+	cd predix-machine-drivers-edison/Install
+	./RoomMonKitDriverInstall.sh
+fi
 
 echo "Starting Services"
 sudo systemctl daemon-reload
-sudo systemctl start starter-sensor-pub
+if [ "$KIT" == "intel.edison.grove.flower" ]; then
+	sudo systemctl start flowpot-sensor-pub
+fi
+if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
+	echo "Installing Room Monitor Kit"
+	sudo systemctl start roommon-sensor-pub
+fi
 sudo systemctl start predix-machine
 sudo systemctl start mongoStart
 sudo systemctl start mongoServer
-sudo systemctl enable starter-sensor-pub
+if [ "$KIT" == "intel.edison.grove.flower" ]; then
+	sudo systemctl enable flowpot-sensor-pub
+fi
+if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
+	echo "Installing Room Monitor Kit"
+	sudo systemctl enable roommon-sensor-pub
+fi
 sudo systemctl enable predix-machine
 sudo systemctl enable mongoServer
 sudo systemctl enable mongoStart
 
 echo "***Services running, provision complete***"
+
+
