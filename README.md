@@ -47,9 +47,18 @@
 		ssh root@192.168.1.1
 		The device password is "edison"
 	
-	b. If using windows connect to the device using the microUSB serial port (farthest microUSB from USB port). Download and install putty.
-
-		mode.com
+	b. If using windows connect to the ad-hoc network following these steps.
+		
+		**go to "Network and Sharing Center"
+		**click "Set up a new connection or network"
+		**double click "Manually connect to a wireless network"
+		**enter the kit-wireless of the ad-hoc network (as shown by "netsh wlan show networks") into the "Network name" field
+		**configure security settings accordingly
+		**uncheck "Start this connection automatically" (important)
+		**click "Next", then "Close"
+		**netsh wlan set profileparameter kit-wireless connectiontype=ibss
+		**netsh wlan connect kit-wireless
+		**Use a bash to replicate the ssh in part a. or use putty 
 
 	The above command will give the COM port of the connected Edison. In putty set your connection type to serial. Change serial line to the line from the mode.com command. Set the speed to 115200 then click open to connect.
 	
