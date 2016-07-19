@@ -64,6 +64,8 @@ if [ "$KITARG" == "false" ]; then
 	exit 1
 fi
 
+cd /predix
+
 echo "Update predix machine"
 cd predix-machine-edison
 git pull origin master
