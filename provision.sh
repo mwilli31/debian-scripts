@@ -68,16 +68,22 @@ cd /predix
 
 echo "Update predix machine"
 cd predix-machine-edison
+git fetch --all
+git reset --hard origin/master
 git pull origin master
 cd ..
 
 echo "Update python drivers"
 cd predix-machine-drivers-edison
+git fetch --all
+git reset --hard origin/master
 git pull origin master
 cd ..
 
 echo "Update local asset"
 cd predix-asset-local
+git fetch --all
+git reset --hard origin/master
 git pull origin master
 cd setupScripts
 ./mongoSetup.sh
