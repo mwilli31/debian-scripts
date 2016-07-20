@@ -1,6 +1,4 @@
 #!/bin/bash
-rm /etc/dhcp/dhcpd.conf
-rm /etc/dhcp/.dhcpd.conf.swp
 echo 'ddns-update-style interim;' > /etc/dhcp/dhcpd.conf
 echo 'default-lease-time 600;' >> /etc/dhcp/dhcpd.conf
 echo 'max-lease-time 7200;' >> /etc/dhcp/dhcpd.conf
