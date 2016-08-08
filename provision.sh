@@ -60,7 +60,7 @@ fi
 #Check if the kit exists
 cd /predix/predix-machine-drivers-edison
 git fetch --all
-git pull origin Driver_Registry
+git read-tree -mu HEAD
 while IFS='' read -r line
 do
         if [ "$line" == "$KIT" ]; then
@@ -102,7 +102,7 @@ chmod -R 777 *
 echo "Installing $KIT"
 cd /predix/predix-machine-drivers-edison
 echo "Install/$KIT/" >> .git/info/sparse-checkout
-git pull origin Driver_Registry
+git read-tree -mu HEAD
 cd Install/$KIT
 ./setup.sh
 
