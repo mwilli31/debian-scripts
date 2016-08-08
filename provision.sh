@@ -61,6 +61,7 @@ fi
 cd /predix/predix-machine-drivers-edison
 git fetch --all
 git read-tree -mu HEAD
+git pull origin Driver_Registry
 while IFS='' read -r line
 do
         if [ "$line" == "$KIT" ]; then
