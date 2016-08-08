@@ -33,9 +33,6 @@ do
                 -k)
                         shift
                         KIT="$1"
-			if [ "$KIT" == "intel.edison.grove.flower" ] || [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
-				KITARG="true"
-			fi
 			shift
                         ;;
 		*)
@@ -59,8 +56,23 @@ if [ "$IDARG" == "false" ] || [ "$ID" == "" ]; then
         echo "ID argument -i required"
 	exit 1
 fi
+
+#Check if the kit exists
+cd /predix/predix-machine-drivers-edison
+git fetch --all
+git pull origin Driver_Registry
+while IFS='' read -r line
+do
+        if [ "$line" == "$KIT" ]; then
+                KITARG="true"
+        fi
+		if [ "$KIT" == "help" ]; then
+                echo "$line"
+        fi
+done < /predix/predix-machine-drivers-edison/kits_offered.txt
+
 if [ "$KITARG" == "false" ]; then
-        echo "Kit argument -k required, must be intel.edison.grove.flower, intel.edison.grove.roommonitor"
+        echo "Kit argument -k required, use -k help for all options"
 	exit 1
 fi
 
@@ -71,13 +83,6 @@ cd predix-machine-edison
 git fetch --all
 git reset --hard origin/master
 git pull origin master
-cd ..
-
-echo "Update python drivers"
-cd predix-machine-drivers-edison
-git fetch --all
-git reset --hard origin/Driver_Registry
-git pull origin Driver_Registry
 cd ..
 
 echo "Update local asset"
@@ -94,22 +99,12 @@ cd ..
 
 
 chmod -R 777 *
-if [ "$KIT" == "intel.edison.grove.flower" ]; then
-	echo "Installing Flower Pot Kit"
-	cd /predix/predix-machine-drivers-edison
-	echo "Install/intel.edison.grove.flower/" >> .git/info/sparse-checkout
-	git pull origin Driver_Registry
-	cd Install/intel.edison.grove.flower
-	./setup.sh
-fi
-if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
-	echo "Installing Room Monitor Kit"
-	cd /predix/predix-machine-drivers-edison
-	echo "Install/intel.edison.grove.roommonitor/" >> .git/info/sparse-checkout
-	git pull origin Driver_Registry
-	cd Install/intel.edison.grove.roommonitor
-	./setup.sh
-fi
+echo "Installing $KIT"
+cd /predix/predix-machine-drivers-edison
+echo "Install/$KIT/" >> .git/info/sparse-checkout
+git pull origin Driver_Registry
+cd Install/$KIT
+./setup.sh
 
 echo "Starting Services"
 sudo systemctl daemon-reload
