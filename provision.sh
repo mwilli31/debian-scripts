@@ -76,8 +76,8 @@ cd ..
 echo "Update python drivers"
 cd predix-machine-drivers-edison
 git fetch --all
-git reset --hard origin/master
-git pull origin master
+git reset --hard origin/Driver_Registry
+git pull origin Driver_Registry
 cd ..
 
 echo "Update local asset"
@@ -96,34 +96,26 @@ cd ..
 chmod -R 777 *
 if [ "$KIT" == "intel.edison.grove.flower" ]; then
 	echo "Installing Flower Pot Kit"
-	cd predix-machine-drivers-edison/Install
-	./FlowerPotKitDriverInstall.sh
+	cd /predix/predix-machine-drivers-edison
+	echo "Install/intel.edison.grove.flower/" >> .git/info/sparse-checkout
+	git pull origin Driver_Registry
+	cd Install/intel.edison.grove.flower
+	./setup.sh
 fi
 if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
 	echo "Installing Room Monitor Kit"
-	cd predix-machine-drivers-edison/Install
-	./RoomMonKitDriverInstall.sh
+	cd /predix/predix-machine-drivers-edison
+	echo "Install/intel.edison.grove.roommonitor/" >> .git/info/sparse-checkout
+	git pull origin Driver_Registry
+	cd Install/intel.edison.grove.roommonitor
+	./setup.sh
 fi
 
 echo "Starting Services"
 sudo systemctl daemon-reload
-if [ "$KIT" == "intel.edison.grove.flower" ]; then
-	sudo systemctl start flowpot-sensor-pub
-fi
-if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
-	echo "Installing Room Monitor Kit"
-	sudo systemctl start roommon-sensor-pub
-fi
 sudo systemctl start predix-machine
 sudo systemctl start mongoStart
 sudo systemctl start mongoServer
-if [ "$KIT" == "intel.edison.grove.flower" ]; then
-	sudo systemctl enable flowpot-sensor-pub
-fi
-if [ "$KIT" == "intel.edison.grove.roommonitor" ]; then
-	echo "Installing Room Monitor Kit"
-	sudo systemctl enable roommon-sensor-pub
-fi
 
 echo "Downloading and updating flowthings"
 curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash

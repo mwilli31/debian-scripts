@@ -22,7 +22,13 @@ git clone https://github.com/mwilli31/predix-machine-edison.git
 
 #intitial files for Python Drivers
 echo "Git pull Python Drivers"
-git clone https://github.com/mwilli31/predix-machine-drivers-edison.git
+mkdir predix-machine-drivers-edison
+cd predix-machine-drivers-edison
+git init
+git remote add -f origin https://github.com/mwilli31/predix-machine-drivers-edison.git
+git config core.sparseCheckout true
+echo "Install/DriverWriter.py" >> .git/info/sparse-checkout
+git pull origin Driver_Registry
 
 #Initial files for Local Asset
 echo "Git pull Local Asset"
@@ -33,12 +39,6 @@ git clone https://github.com/mwilli31/wifi-setup-edison.git
 
 #Update permissions for future scripts to run without issue
 chmod -R 777 *
-
-#Install python drivers setup and create SystemD files
-echo "Set up Python Drivers"
-cd predix-machine-drivers-edison/Install
-./GroveSetupRequired.sh
-cd /predix
 
 #Set up framework for Local Asset by installing mongodb and creating SystemD files to start the REST client
 echo "Setup Local Asset"
