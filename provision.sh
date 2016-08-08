@@ -107,17 +107,17 @@ cd Install/$KIT
 ./setup.sh
 
 echo "Starting Services"
-sudo systemctl daemon-reload
-sudo systemctl start predix-machine
-sudo systemctl start mongoStart
-sudo systemctl start mongoServer
+systemctl daemon-reload
+systemctl start predix-machine
+systemctl start mongoStart
+systemctl start mongoServer
 
 echo "Downloading and updating flowthings"
 curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
 
-sudo systemctl enable predix-machine
-sudo systemctl enable mongoServer
-sudo systemctl enable mongoStart
+systemctl enable predix-machine
+systemctl enable mongoServer
+systemctl enable mongoStart
 
 echo "***Services running, provision complete***"
 
