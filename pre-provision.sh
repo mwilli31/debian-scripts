@@ -28,6 +28,7 @@ git init
 git remote add -f origin https://github.com/mwilli31/predix-machine-drivers-edison.git
 git config core.sparseCheckout true
 echo "Install/DriverWriter.py" >> .git/info/sparse-checkout
+echo "kits_offered.txt" >> .git/info/sparse-checkout
 git pull origin Driver_Registry
 cd ..
 
