@@ -98,11 +98,11 @@ cd ..
 
 
 
-chmod -R 777 *
 echo "Installing $KIT"
 cd /predix/predix-machine-drivers-edison
 echo "Install/$KIT/" >> .git/info/sparse-checkout
 git read-tree -mu HEAD
+chmod -R 777 *
 cd Install/$KIT
 ./setup.sh
 
