@@ -31,7 +31,7 @@ echo "Setting up Edison as Edge Device"
 
 echo "Installing Java"
 apt-get update
-apt-get install openjdk-8-jdk
+apt-get install -y openjdk-8-jdk
 echo "Java Installed"
 
 #intitial PredixMachine
