@@ -20,7 +20,7 @@
 		After editing press Ctrl + X, when prompted hit y then enter
 		Use the command "ifup wlan0" to enable wifi
 		
-	5. Clone setup scripts:
+	4. Clone setup scripts:
 		cd /predix
 		mkdir debian-scripts
 		cd debian-scripts
@@ -28,7 +28,7 @@
 		git remote add -f origin https://github.com/mwilli31/debian-scripts.git
 		git pull origin Driver_Registry
 
-	6. Run the setup script, kit number will be the number used to connect to the kit with adhoc
+	5. Run the setup script, kit number will be the number used to connect to the kit with adhoc
 		
 		cd /predix/debian-scripts
 		chmod 777 *
@@ -36,7 +36,7 @@
 
 # Provision
 	
-	8a. Connect to the ad-hoc network(does not work for Windows). Wirelessly connect to the network kit-wireless through your computer. Then, ssh into the device.
+	1a. Connect to the ad-hoc network(does not work for Windows). Wirelessly connect to the network kit-wireless through your computer. Then, ssh into the device.
 	
 		ssh root@kit-<kit number>.local
 		The device password is "edison"
@@ -56,20 +56,20 @@
 
 	The above command will give the COM port of the connected Edison. In putty set your connection type to serial. Change serial line to the line from the mode.com command. Set the speed to 115200 then click open to connect.
 
-	10. Connect to wifi
+	2. Connect to wifi
 
 		cd /predix/wifi-setup-edison
 		./setupWifi.sh -s *Network Name* -p *Network Password*
 
-	11. Run the provision script, for a full list of kit types use help for kit type
+	3. Run the provision script, for a full list of kit types use help for kit type
 
 		cd /predix
 		./provision.sh -u *Flowthings Username* -t *Flowthings Token* -i *Flowthings Device ID* -k *kit type*
 
 
-	12. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison.git, then restart the Edison
+	4. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison.git, then restart the Edison
 
-	13. Check if services are up
+	5. Check if services are up
 
 		systemctl status <kit specific service>
 		systemctl status predix-machine
