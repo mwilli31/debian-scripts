@@ -83,7 +83,7 @@ echo "kit-$KITNUM" > /etc/hostname
 
 #Set up adhoc files
 cd $scriptPath/adhoc-scripts
-./adhocSetup.sh
+./adhocSetup.sh -k $KITNUM
 
 #Install avahi and adhoc
 sudo apt-get install -y --ignore-hold avahi-daemon netatalk
