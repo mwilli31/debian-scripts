@@ -46,6 +46,15 @@ if [ "$IDARG" == "false" ] || [ "$ID" == "" ]; then
 	exit 1
 fi
 
+#Setup hosts to work with flowthings (temporary -- flowthings is working on this)
+echo "*********************"
+echo "Setup hosts"
+
+echo "169.45.182.68 api.flowthings.io" >> /etc/hosts
+echo "169.45.182.68 ws.flowthings.io" >> /etc/hosts
+echo "169.45.182.68 auth.flowthings.io" >> /etc/hosts
+echo "169.45.182.68 dev.flowthings.io" >> /etc/hosts
+
 echo "Downloading and updating Flowthings"
 curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
 echo "Updated Flowthings"

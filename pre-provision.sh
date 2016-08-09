@@ -34,17 +34,6 @@ apt-get update
 apt-get install openjdk-8-jdk
 echo "Java Installed"
 
-
-#Setup hosts to work with flowthings (temporary -- flowthings is working on this)
-echo "*********************"
-echo "Setup hosts"
-
-echo "169.45.182.68 api.flowthings.io" >> /etc/hosts
-echo "169.45.182.68 ws.flowthings.io" >> /etc/hosts
-echo "169.45.182.68 auth.flowthings.io" >> /etc/hosts
-echo "169.45.182.68 dev.flowthings.io" >> /etc/hosts
-#temporary-end
-
 #intitial PredixMachine
 mkdir /predix
 scriptPath="$PWD"
