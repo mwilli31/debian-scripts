@@ -1,12 +1,8 @@
 #!/bin/bash
-USERNAME=""
-TOKEN=""
-ID=""
-KIT=""
-USERARG="false"
-TOKENARG="false"
-IDARG="false"
-KITARG="false"
+U_ARG=""
+T_ARG=""
+I_ARG=""
+K_ARG=""
 
 #check for flowthings arguments
 while [ $# -gt 0 ]
@@ -14,25 +10,22 @@ do
         case "$1" in
                 -u)
                         shift
-                        USERNAME="$1"
-			USERARG="true"
+                        U_ARG="$1"
 			shift
                         ;;
                 -t)
                         shift
-                        TOKEN="$1"
-			TOKENARG="true"
+                        T_ARG="$1"
 			shift
                         ;;
                 -i)
                         shift
-                        ID="$1"
-			IDARG="true"
+                        I_ARG="$1"
 			shift
                         ;;
                 -k)
                         shift
-                        KIT="$1"
+                        K_ARG="$1"
 			shift
                         ;;
 		*)
@@ -43,83 +36,18 @@ do
         esac
 done
 
-#Exit if any of the four required parameters are missing
-if [ "$USERARG" == "false" ] || [ "$USERNAME" == "" ]; then
-	echo "Username argument -u required"
-	exit 1
-fi
-if [ "$TOKENARG" == "false" ] || [ "$TOKEN" == "" ]; then
-        echo "Token argument -t required"
-	exit 1
-fi
-if [ "$IDARG" == "false" ] || [ "$ID" == "" ]; then
-        echo "ID argument -i required"
-	exit 1
-fi
+#provision flowthings
+./predix/debian-scripts/provision-scripts/provision_flowthings.sh -u $U_ARG -t $T_ARG -i $I_ARG
 
-#Check if the kit exists
-cd /predix/predix-machine-drivers-edison
-git fetch --all
-git read-tree -mu HEAD
-git pull origin Driver_Registry
-while IFS='' read -r line
-do
-        if [ "$line" == "$KIT" ]; then
-                KITARG="true"
-        fi
-		if [ "$KIT" == "help" ]; then
-                echo "$line"
-        fi
-done < /predix/predix-machine-drivers-edison/kits_offered.txt
+#provision kit specific drivers
+./predix/debian-scripts/provision-scripts/provision_drivers.sh -k $K_ARG
 
-if [ "$KITARG" == "false" ]; then
-        echo "Kit argument -k required, use -k help for all options"
-	exit 1
-fi
+#provision predix machine
+./predix/debian-scripts/provision-scripts/provision_predix_machine.sh
 
-cd /predix
+#provision local asset
+./predix/debian-scripts/provision-scripts/provision_local_asset.sh
 
-echo "Update predix machine"
-cd predix-machine-edison
-git fetch --all
-git reset --hard origin/master
-git pull origin master
-cd ..
-
-echo "Update local asset"
-cd predix-asset-local
-git fetch --all
-git reset --hard origin/master
-git pull origin master
-cd setupScripts
-./mongoSetup.sh
-./startMongo.sh
-cd ..
-cd ..
-
-
-
-echo "Installing $KIT"
-cd /predix/predix-machine-drivers-edison
-echo "Install/$KIT/" >> .git/info/sparse-checkout
-git read-tree -mu HEAD
-chmod -R 777 *
-cd Install/$KIT
-./setup.sh
-
-echo "Starting Services"
+echo "Restarting Services"
 systemctl daemon-reload
-systemctl start predix-machine
-systemctl start mongoStart
-systemctl start mongoServer
-
-echo "Downloading and updating flowthings"
-curl -vvv "https://bootstrap.flowthings.io/install_kit.sh?username=${USERNAME}&token=${TOKEN}&device_id=${ID}" | bash
-
-systemctl enable predix-machine
-systemctl enable mongoServer
-systemctl enable mongoStart
-
 echo "***Services running, provision complete***"
-
-
