@@ -1,4 +1,31 @@
 #!/bin/bash
+
+KITNUM=""
+KITARG="false"
+#check for kit number argument
+while [ $# -gt 0 ]
+do
+        case "$1" in
+                -u)
+                        shift
+                        KITNUM="$1"
+			KITARG="true"
+			shift
+                        ;;
+		*)
+			shift
+			break
+			;;
+
+        esac
+done
+
+#Exit if any of the four required parameters are missing
+if [ "$KITARG" == "false" ] || [ "$KITNUM" == "" ]; then
+	echo "Kit number argument -k required"
+	exit 1
+fi
+
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
 
@@ -46,6 +73,9 @@ chmod -R 777 *
 echo "Setup Local Asset"
 ./predix-asset-local/setupScripts/setup.sh
 
+#Change kit name
+echo "kit-$KITNUM" > /etc/hostname
+
 #Set up adhoc files
 cd $scriptPath/adhoc-scripts
 ./adhocSetup.sh
@@ -59,5 +89,6 @@ sudo apt-get install -y openssh-server
 ifdown wlan0
 ifup wlan0
 
-echo "***Done***"
+echo "***Done, Proceeding to Reboot***"
+reboot
 #end file
