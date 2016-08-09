@@ -29,6 +29,11 @@ fi
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
 
+echo "Installing Java"
+apt-get update
+apt-get install openjdk-8-jdk
+echo "Java Installed"
+
 
 #Setup hosts to work with flowthings (temporary -- flowthings is working on this)
 echo "*********************"
