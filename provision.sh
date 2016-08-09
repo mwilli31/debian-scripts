@@ -40,9 +40,15 @@ chmod -R 777 *
 
 #provision flowthings
 /predix/debian-scripts/provision-scripts/provision_flowthings.sh -u $U_ARG -t $T_ARG -i $I_ARG
+if [ "$?" == "1" ]; then
+	exit 1
+fi
 
 #provision kit specific drivers
 /predix/debian-scripts/provision-scripts/provision_drivers.sh -k $K_ARG
+if [ "$?" == "1" ]; then
+	exit 1
+fi
 
 #provision predix machine
 /predix/debian-scripts/provision-scripts/provision_predix_machine.sh
