@@ -6,7 +6,7 @@ KITARG="false"
 while [ $# -gt 0 ]
 do
         case "$1" in
-                -u)
+                -k)
                         shift
                         KITNUM="$1"
 			KITARG="true"
