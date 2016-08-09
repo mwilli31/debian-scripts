@@ -36,6 +36,8 @@ do
         esac
 done
 
+chmod -R 777 *
+
 #provision flowthings
 /predix/debian-scripts/provision-scripts/provision_flowthings.sh -u $U_ARG -t $T_ARG -i $I_ARG
 
