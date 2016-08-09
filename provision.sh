@@ -56,6 +56,9 @@ fi
 #provision local asset
 /predix/debian-scripts/provision-scripts/provision_local_asset.sh
 
+echo "Setting up Logs"
+mv /etc/cron.daily/logrotate /etc/cron.hourly
+
 echo "Restarting Services"
 systemctl daemon-reload
 echo "***Services running, provision complete***"
