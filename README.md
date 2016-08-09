@@ -1,5 +1,5 @@
 # Predix Setup Script
-	Skip to step 7 if using the PredixJubilinux flash image (pre-flashed Edison)
+	# Pre-provision
  
 	1. Flash the Edison with jubilinux and allow time for the Edison to restart. When prompted, press Ctrl + D. When restarting is finished:
 	
@@ -19,32 +19,26 @@
 		After wpa-psk replace the text that follows with your network's password
 		After editing press Ctrl + X, when prompted hit y then enter
 		Use the command "ifup wlan0" to enable wifi
-
-	4. Setup Java (for Oracle JDK1.8.065)
-		1) add $JAVA_HOME to ~/.bashrc
-			a) nano ~/.bashrc
-			b) at the end add: export JAVA_HOME="location of jdk/bin/java"
-			c) save and exit, then run: source ~/.bashrc
-		2) link keytool
-			a) run: ln -s (path to keytool [location of jdk/bin/keytool]) /usr/bin/keytool
-		3) install Java
-			a) sudo update alternatives --install "/usr/bin/java" "java" "$JAVA_HOME" 1
 		
-		
-	5. In the /predix directory:
-		
-		chmod -R 777 *
-
-	6. Run the setup script
-		
+	5. Clone setup scripts:
 		cd /predix
-		./InitialSetup.sh
+		mkdir debian-scripts
+		cd debian-scripts
+		git init
+		git remote add -f origin https://github.com/mwilli31/debian-scripts.git
+		git pull origin Driver_Registry
 
-	7. Restart the Edison
+	6. Run the setup script, kit number will be the number used to connect to the kit with adhoc
+		
+		cd /predix/debian-scripts
+		chmod 777 *
+		./pre-provision.sh -k <kit number>
+
+	# Provision
 	
 	8a. Connect to the ad-hoc network(does not work for Windows). Wirelessly connect to the network kit-wireless through your computer. Then, ssh into the device.
 	
-		ssh root@192.168.1.1
+		ssh root@kit-<kit number>.local
 		The device password is "edison"
 	
 	b. If using windows connect to the ad-hoc network following these steps.
@@ -61,27 +55,23 @@
 		**Use a bash to replicate the ssh in part a. or use putty 
 
 	The above command will give the COM port of the connected Edison. In putty set your connection type to serial. Change serial line to the line from the mode.com command. Set the speed to 115200 then click open to connect.
-	
-	9. If not done previously, set up permissions:
-
-		cd /predix
-		chmod -R 777 *
 
 	10. Connect to wifi
 
 		cd /predix/wifi-setup-edison
 		./setupWifi.sh -s *Network Name* -p *Network Password*
 
-	11. Run the provision script
+	11. Run the provision script, for a full list of kit types use help for kit type
 
 		cd /predix
-		./provision.sh -u *Flowthings Username* -t *Flowthings Token* -i *Flowthings Device ID* -k *Flowthings Device Name*
+		./provision.sh -u *Flowthings Username* -t *Flowthings Token* -i *Flowthings Device ID* -k *kit type*
+
 
 	12. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison.git, then restart the Edison
 
 	13. Check if services are up
 
-		systemctl status starter-sensor-pub
+		systemctl status <kit specific service>
 		systemctl status predix-machine
 		systemctl status mongoStart
 		systemctl status mongoServer
