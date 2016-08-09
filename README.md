@@ -1,5 +1,5 @@
 # Predix Setup Script
-# Pre-provision
+# Pre-provision - How to Use
  
 	1. Flash the Edison with jubilinux and allow time for the Edison to restart. When prompted, press Ctrl + D. When restarting is finished:
 	
@@ -33,6 +33,24 @@
 		cd /predix/debian-scripts
 		chmod 777 *
 		./pre-provision.sh -k <kit number>
+
+# Pre-provision - Info
+
+	1. Takes in an argument for kit number -k, and stops if no argument is given
+
+	2. Installs openjdk-8
+
+	3. Pulls down predix machine, driver directory, local asset and wifi setup.
+
+		Only downloads a list of kits offered and driver writer for drivers
+
+	4. Sets up local asset framework, installs mongodb and creates SystemD files to start REST client
+
+	5. Changes hostname of kit to kit-<kit number>
+
+	6. Sets up adhoc network to be kit-<kit number>-wireless
+
+	7. Reboots the device for changes to take affect
 
 # Provision
 	
@@ -76,3 +94,58 @@
 		systemctl status mongoStart
 		systemctl status mongoServer
 		
+# Provision - Info
+
+	1. Accepts arguments -u <flowthings username> -t <flowthings track token> -i <flowthings track id> -k <kit type>
+
+	2. Provisions flowthings
+
+		Takes in arguments and stops script if one is missing
+		
+		Sets up hosts for flowthings
+		
+		Downloads flowthings and sets up flowthings service using curl command
+
+		Starts the service
+
+	3. Provisions drivers
+	
+		Updates current driver files (writer and list of offered kits)
+		
+		Accepts kit type, if not an offered type in offered_kits.txt, script stops
+		
+		If help is the kit type argument, all offered kit types are displayed
+		
+		Adds kit type to sparse-checkout (allows it to be pulled and updated)
+		
+		Runs setup script in kit type specific directory (/predix/predix-machine-drivers-edison/Install/<kit type>/setup.sh
+
+		If new kits are added they should have their directory name added to offered_kits.txt and contain a setup.sh script to do all setup
+
+		Setup will install driver specific dependencies (currently mraa and upm), create the driver, and create the service
+
+		Starts the service
+
+	4. Provision predix machine
+
+		Updates predix machine
+		
+		Writes the service for predix machine (contained in pm_service_setup.sh)
+
+		Starts the service
+
+	5. Provision local asset
+		
+		Updates local asset
+	
+		Runs mongo setup and start
+
+		Starts mongo services
+
+	6. Move logrotate
+
+		Moves logrotate from cron.daily to cron.hourly so logs are rotated hourly
+
+		This is necessary to keep file system from filling
+
+	7. Restarts all services
