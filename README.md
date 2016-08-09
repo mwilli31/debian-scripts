@@ -1,5 +1,5 @@
 # Predix Setup Script
-	# Pre-provision
+# Pre-provision
  
 	1. Flash the Edison with jubilinux and allow time for the Edison to restart. When prompted, press Ctrl + D. When restarting is finished:
 	
@@ -34,7 +34,7 @@
 		chmod 777 *
 		./pre-provision.sh -k <kit number>
 
-	# Provision
+# Provision
 	
 	8a. Connect to the ad-hoc network(does not work for Windows). Wirelessly connect to the network kit-wireless through your computer. Then, ssh into the device.
 	
