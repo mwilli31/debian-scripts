@@ -1,30 +1,7 @@
 #!/bin/bash
 
-KITNUM=""
-KITARG="false"
-#check for kit number argument
-while [ $# -gt 0 ]
-do
-        case "$1" in
-                -k)
-                        shift
-                        KITNUM="$1"
-			KITARG="true"
-			shift
-                        ;;
-		*)
-			shift
-			break
-			;;
-
-        esac
-done
-
-#Exit if any of the four required parameters are missing
-if [ "$KITARG" == "false" ] || [ "$KITNUM" == "" ]; then
-	echo "Kit number argument -k required"
-	exit 1
-fi
+#Get unique id for the kit
+KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5)
 
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
