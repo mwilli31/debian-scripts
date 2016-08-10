@@ -28,15 +28,15 @@
 		git remote add -f origin https://github.com/mwilli31/debian-scripts.git
 		git pull origin Driver_Registry
 
-	5. Run the setup script, kit number will be the number used to connect to the kit with adhoc
+	5. Run the setup script
 		
 		cd /predix/debian-scripts
 		chmod 777 *
-		./pre-provision.sh -k <kit number>
+		./pre-provision.sh
 
 # Pre-provision - Info
 
-	1. Takes in an argument for kit number -k, and stops if no argument is given
+	1. Uses a unique id (uuid for /dev/mmcblk0p5) and saves as kit number to be used for hostname and adhoc
 
 	2. Installs openjdk-8
 
