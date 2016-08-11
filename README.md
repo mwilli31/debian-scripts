@@ -92,21 +92,28 @@ b. If using windows connect to the ad-hoc network following these steps.
 2. Connect to wifi
 
 	cd /predix/wifi-setup-edison
+	
 	./setupWifi.sh -s *Network Name* -p *Network Password*
+
+	reboot
 
 3. Run the provision script, for a full list of kit types use help for kit type
 
 	cd /predix
+	
 	./provision.sh -u *Flowthings Username* -t *Flowthings Token* -i *Flowthings Device ID* -k *kit type*
 
 
-4. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison.git, then restart the Edison
+4. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison/tree/Driver_Registry.git, then restart the Edison
 
 5. Check if services are up
 
 	systemctl status <kit specific service>
+	
 	systemctl status predix-machine
+	
 	systemctl status mongoStart
+	
 	systemctl status mongoServer
 		
 # Provision - Info
