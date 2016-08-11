@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Get unique id for the kit
-KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5)
+KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c1-13)
 
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
