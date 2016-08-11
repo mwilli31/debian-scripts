@@ -4,6 +4,7 @@
 1. Flash the Edison with jubilinux and allow time for the Edison to restart. When prompted, press Ctrl + D. When restarting is finished:
 
 	login: root
+	
 	password: edison
 
 2. Create the predix directory
@@ -13,26 +14,39 @@
 3. Set up wifi
 	
 	nano /etc/network/interfaces
+	
 	Place a # in front of auto usb0
+	
 	Delete the # in front of auto wlan0
+	
 	After wpa-ssid replace the text that follows with the name of your network
+	
 	After wpa-psk replace the text that follows with your network's password
+	
 	After editing press Ctrl + X, when prompted hit y then enter
+	
 	Use the command "ifup wlan0" to enable wifi
 		
 4. Clone setup scripts:
 	
 	cd /predix
+	
 	mkdir debian-scripts
+	
 	cd debian-scripts
+	
 	git init
+	
 	git remote add -f origin https://github.com/mwilli31/debian-scripts.git
+	
 	git pull origin Driver_Registry
 
 5. Run the setup script
 		
 	cd /predix/debian-scripts
+	
 	chmod 777 *
+	
 	./pre-provision.sh
 
 # Pre-provision - Info
