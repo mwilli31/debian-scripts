@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Value kit num should be
 KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c1-13)
 
@@ -45,10 +47,10 @@ done < /etc/network/interfaces
 
 # change interfaces if in adhoc mode with the wrong network name
 if [ "$IN_ADHOC" == "true" ] && [ "$WRONGNET" == "true" ]; then
-    cat adhoc1.txt > /etc/network/interfaces
-	echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces
-	cat adhoc2.txt >> /etc/network/interfaces
-	SHOULDREBOOT="true"
+    cat /predix/debian-scripts/adhoc-scripts/adhoc1.txt > /etc/network/interfaces
+    echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces
+    cat /predix/debian-scripts/adhoc-scripts/adhoc2.txt >> /etc/network/interfaces
+    SHOULDREBOOT="true"
 fi
 
 # reboot if a change was made
