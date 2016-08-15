@@ -44,7 +44,7 @@ do
 done < /etc/network/interfaces
 
 # change interfaces if in adhoc mode with the wrong network name
-if [ "$IN_ADHOC" == "true"] && [ "$WRONGNET" == "true" ]; then
+if [ "$IN_ADHOC" == "true" ] && [ "$WRONGNET" == "true" ]; then
     cat adhoc1.txt > /etc/network/interfaces
 	echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces
 	cat adhoc2.txt >> /etc/network/interfaces
