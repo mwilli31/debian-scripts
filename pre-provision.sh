@@ -47,6 +47,9 @@ echo "Setup Local Asset"
 #Change kit name
 echo "kit-$KITNUM" > /etc/hostname
 
+# set up hostname changing service
+/predix/debian-scripts/adhoc-scripts/hostnameServiceSetup.sh
+
 #Set up adhoc files
 cd $scriptPath/adhoc-scripts
 ./adhocSetup.sh -k $KITNUM
