@@ -18,26 +18,37 @@ done < /etc/hostname
 NETSTRING=""
 # Number for adhoc network
 NTNUM=""
+# Set to true if network name does not match kit number
+WRONGNET="false"
+# Set to true if device is currently in adhoc mode
+IN_ADHOC="false"
 
-# Check if adhoc-interfaces and interfaces (for wireless) are the same
-if cmp -s /etc/network/interfaces /etc/network/interfaces-adhoc ; then
-   # interfaces same as original flash image, check if this is kit flash image is from, else change interfaces-adhoc
-   while IFS='' read -r line
-	do
-		# Substring of line being read
-		NETSTRING=$(echo $line | cut -c1-14)
-		NETNUM=$(echo $LINE | cut -c20-32)
-        if [ "$NETSTRING" == "wireless-essid" ]; then
+# check current wireless setup for adhoc mode and network name
+while IFS='' read -r line
+do
+	# Substring of line being read
+	NETSTRING=$(echo $line | cut -c1-14)
+	NETNUM=$(echo $line | cut -c20-32)
+    if [ "$NETSTRING" == "wireless-essid" ]; then
             
-			# if adhoc number does not match current hostname, rewrite interfaces
-			if [ "$NETNUM" == "$KITNUM" ]; then
-				cat adhoc1.txt > /etc/network/interfaces
-				echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces
-				cat adhoc2.txt >> /etc/network/interfaces
-				SHOULDREBOOT="true"
-			fi
-        fi
-	done < /etc/hostname
+		# if adhoc number does not match current hostname, rewrite interfaces
+		if [ "$NETNUM" != "$KITNUM" ]; then
+			WRONGNET="true"
+		fi
+    fi
+	
+	# check if currently in adhoc mode
+	if [ "$line" == "wireless-mode ad-hoc" ]; then
+            IN_ADHOC="true"
+    fi
+done < /etc/network/interfaces
+
+# change interfaces if in adhoc mode with the wrong network name
+if [ "$IN_ADHOC" == "true"] && [ "$WRONGNET" == "true" ]; then
+    cat adhoc1.txt > /etc/network/interfaces
+	echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces
+	cat adhoc2.txt >> /etc/network/interfaces
+	SHOULDREBOOT="true"
 fi
 
 # reboot if a change was made
