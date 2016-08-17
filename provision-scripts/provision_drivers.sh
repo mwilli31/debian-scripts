@@ -5,7 +5,7 @@ cd /predix/predix-machine-drivers-edison
 echo "Updating Drivers"
 git fetch --all
 git read-tree -mu HEAD
-git pull origin Driver_Registry
+git pull origin Driver_Developer
 echo "Updated Drivers"
 
 KIT=""
