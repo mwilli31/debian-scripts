@@ -39,7 +39,7 @@
 	
 	git remote add -f origin https://github.com/mwilli31/debian-scripts.git
 	
-	git pull origin Driver_Registry
+	git pull origin Driver_Developer
 
 5. Run the setup script
 		
@@ -104,7 +104,7 @@ b. If using windows connect to the ad-hoc network following these steps.
 	./provision.sh -u *Flowthings Username* -t *Flowthings Token* -i *Flowthings Device ID* -k *kit type*
 
 
-4. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison/tree/Driver_Registry.git, then restart the Edison
+4. Attach Grove Header and sensors according to https://github.com/mwilli31/predix-machine-drivers-edison/tree/Driver_Developer.git, then restart the Edison
 
 5. Check if services are up
 
