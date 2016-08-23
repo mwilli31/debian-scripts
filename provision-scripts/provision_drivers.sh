@@ -35,6 +35,7 @@ do
         fi
 		if [ "$KIT" == "help" ]; then
                 echo "$line"
+                KITARG="false"
         fi
 done < /predix/predix-machine-drivers-edison/kits_offered.txt
 
