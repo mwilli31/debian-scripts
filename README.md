@@ -108,7 +108,7 @@ b. If using windows connect to the ad-hoc network following these steps.
 
 5. Check if services are up
 
-	systemctl status <kit specific service>
+	systemctl status *kit specific service* (Check /predix/predix-machine-drivers-edison/Install/*kit name*/README.md for info on kit)
 	
 	systemctl status predix-machine
 	
@@ -143,6 +143,8 @@ b. If using windows connect to the ad-hoc network following these steps.
 	Runs setup script in kit type specific directory (/predix/predix-machine-drivers-edison/Install/<kit type>/setup.sh
 
 	If new kits are added they should have their directory name added to offered_kits.txt and contain a setup.sh script to do all setup
+
+	*Important* Make sure to keep help as the last kit in offered_kits.txt
 
 	Setup will install driver specific dependencies (currently mraa and upm), create the driver, and create the service
 
