@@ -21,7 +21,7 @@ done
 
 # if kit number not passed as argument, find it
 if [ "$KITARG" == "false" ]; then
-	KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c1-13)
+	KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c10-13)
 fi
 cat adhoc1.txt > /etc/network/interfaces-adhoc
 echo "wireless-essid kit-$KITNUM-wireless" >> /etc/network/interfaces-adhoc
