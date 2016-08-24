@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Get unique id for the kit
-KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c1-13)
+KITNUM=$(blkid -s UUID -o value /dev/mmcblk0p5  | cut -c10-13)
 
 #pre-provision script -- getting edison to base image
 echo "Setting up Edison as Edge Device"
@@ -25,10 +25,8 @@ cd predix-machine-drivers-edison
 git init
 git remote add -f origin https://github.com/mwilli31/predix-machine-drivers-edison.git
 git config core.sparseCheckout true
-echo "Install/DriverWriterPython.py" >> .git/info/sparse-checkout
-echo "Install/DriverWriterNode.py" >> .git/info/sparse-checkout
 echo "kits_offered.txt" >> .git/info/sparse-checkout
-git pull origin Driver_Developer
+git pull origin master
 cd ..
 
 #Initial files for Local Asset
