@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'ddns-update-style none;' > /etc/dhcp/dhcpd.conf
+echo 'ddns-update-style standard;' > /etc/dhcp/dhcpd.conf
 echo 'default-lease-time 600;' >> /etc/dhcp/dhcpd.conf
 echo 'max-lease-time 7200;' >> /etc/dhcp/dhcpd.conf
 echo 'authoritative;' >> /etc/dhcp/dhcpd.conf
