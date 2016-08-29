@@ -37,10 +37,8 @@
 	
 	git init
 	
-	git remote add -f origin https://github.com/mwilli31/debian-scripts.git
+	git clone https://github.com/mwilli31/debian-scripts.git
 	
-	git pull origin master
-
 5. Run the setup script
 		
 	cd /predix/debian-scripts
