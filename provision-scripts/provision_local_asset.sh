@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "Updating Local Asset"
-cd /predix/predix-asset-local
+cd
+cd /
+cd predix/predix-asset-local
 git fetch --all
 git reset --hard origin/master
 git pull origin master
