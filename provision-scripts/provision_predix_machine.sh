@@ -3,7 +3,9 @@
 #provision predix machine
 
 echo "Updating Predix Machine"
-cd /predix/predix-machine-edison
+cd 
+cd /
+cd predix/predix-machine-edison
 git fetch --all
 git reset --hard origin/master
 git pull origin master
