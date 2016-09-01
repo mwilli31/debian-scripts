@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #Check if the kit exists
-cd /predix/predix-machine-drivers-edison
+cd 
+cd /
+cd predix/predix-machine-drivers-edison
 echo "Updating Drivers"
 git fetch --all
 git reset --hard origin/master
@@ -45,7 +47,9 @@ if [ "$KITARG" == "false" ]; then
 fi
 
 echo "Installing $KIT"
-cd /predix/predix-machine-drivers-edison
+cd 
+cd /
+cd predix/predix-machine-drivers-edison
 echo "Install/$KIT/" >> .git/info/sparse-checkout
 git read-tree -mu HEAD
 chmod -R 777 *
