@@ -4,6 +4,7 @@
 cd 
 cd /
 cd predix/predix-machine-drivers-edison
+echo $(pwd)
 echo "Updating Drivers"
 git fetch --all
 git reset --hard origin/master
@@ -50,6 +51,7 @@ echo "Installing $KIT"
 cd 
 cd /
 cd predix/predix-machine-drivers-edison
+echo $(pwd)
 echo "Install/$KIT/" >> .git/info/sparse-checkout
 git read-tree -mu HEAD
 chmod -R 777 *
