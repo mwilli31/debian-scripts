@@ -36,6 +36,8 @@ do
         esac
 done
 
+apt-get update
+
 chmod -R 777 *
 
 #provision flowthings
